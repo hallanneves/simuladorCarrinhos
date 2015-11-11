@@ -5,12 +5,13 @@ require "camera"
 function love.load()
 	mundos = {}
 	carros = {}
-	for i = 1 , 100 do
+	for i = 1 , 20 do
 		linha = io.read("*line")
 		velocidade,tuplas = parseLinha(linha)
-		print("tamanho das tuplas"..#tuplas)
+		--print("tamanho das tuplas"..#tuplas)
 		local mundo = love.physics.newWorld(0,10) --gravidade em x e y
 		if pcall(function () carro = geraCarro(mundo,velocidade,tuplas) end) then 
+			--carro = geraCarro(mundo,velocidade,tuplas)
 			table.insert(mundos,mundo)
 			table.insert(carros,carro)
 			local chao = {}

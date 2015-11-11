@@ -12,7 +12,7 @@ function geraCarro(mundo,velocidade,tuplas)
 
 	local body = love.physics.newBody(mundo,0,0,"dynamic")
 	local centroX,centroY = body:getX(),body:getY()
-	print("centroX = "..centroX.." centroY = "..centroY)
+	--print("centroX = "..centroX.." centroY = "..centroY)
 	local shape = love.physics.newPolygonShape(0,0,pontos[1].x,pontos[1].y,pontos[2].x,pontos[2].y)
 	local fixture = love.physics.newFixture(body, shape, 1)
 	fixture:setFilterData(2,1,-1)
@@ -28,7 +28,7 @@ function geraCarro(mundo,velocidade,tuplas)
 			novoShape = love.physics.newPolygonShape(0,0,pontos[i].x,pontos[i].y,pontos[1].x,pontos[1].y)
 			mediaX,mediaY = (centroX*3+pontos[i].x+pontos[1].x)/3,(pontos[1].y+centroY*3+pontos[i].y)/3
 		end
-		print("mediaX = "..mediaX.." mediaY = "..mediaY)
+		--print("mediaX = "..mediaX.." mediaY = "..mediaY)
 		
 		local novoFixture = love.physics.newFixture(body, novoShape, 1)
 		novoFixture:setFilterData(2,1,-1)
@@ -40,7 +40,8 @@ function geraCarro(mundo,velocidade,tuplas)
 		table.insert(shapes,novoShape)
 
 		if tuplas[i].raioRoda>2 then
-			table.insert(rodas,geraRoda(mundo,tuplas[i].raioRoda,converteVelocidade(velocidade),pontos[i].x,pontos[i].y,body))
+			print ("gerando roda de raio "..tuplas[i].raioRoda)
+			table.insert(rodas,geraRoda(mundo,tuplas[i].raioRoda,converteVelocidade(velocidade,tuplas[i].raioRoda),pontos[i].x,pontos[i].y,body))
 		else
 			print("raio roda era "..tuplas[i].raioRoda)
 		end
