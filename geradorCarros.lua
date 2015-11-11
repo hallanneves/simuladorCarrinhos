@@ -63,6 +63,7 @@ function geraRoda(mundo,raio,velocidade,posx,posy,bodyPai)
 	return {raio = raio, velocidade = velocidade*0.5, body = body,shape = shape}
 end
 
-function converteVelocidade(velocidade,raio)
-	return velocidade --VAI COSTAO
+function converteVelocidade(velocidadeAngular,raio)
+	local velocidadeLinear = velocidadeAngular*raio
+	return velocidadeLinear --VAI COSTAO -- FUI
 end
