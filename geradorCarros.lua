@@ -64,6 +64,6 @@ function geraRoda(mundo,raio,velocidade,posx,posy,bodyPai)
 end
 
 function converteVelocidade(velocidadeAngular,raio)
-	local velocidadeLinear = velocidadeAngular*raio
+	local velocidadeLinear = velocidadeAngular*raio/20
 	return velocidadeLinear --VAI COSTAO -- FUI
 end
