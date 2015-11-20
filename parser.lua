@@ -12,7 +12,7 @@ function parseLinha(linha)
 	tuplas = {}
 	for i=1,6 do
 		--print("i="..i.."d[i]"..d[i].." a[i] "..a[i].." r[i] "..r[i])
-		table.insert(tuplas,{angulo=tonumber(a[i])*3.6,distancia=tonumber(d[i]),raioRoda=tonumber(r[i])*0.2})
+		table.insert(tuplas,{angulo=tonumber(a[i])*3.6,distancia=tonumber(d[i]),raioRoda=tonumber(r[i])*0.4})
 		--print (" gerou angulo "..tonumber(a[i])*3.6)
 	end
 

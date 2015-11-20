@@ -30,7 +30,7 @@ function geraCarro(mundo,velocidade,tuplas)
 		end
 		--print("mediaX = "..mediaX.." mediaY = "..mediaY)
 		
-		local novoFixture = love.physics.newFixture(body, novoShape, 1)
+		local novoFixture = love.physics.newFixture(body, novoShape, 4)
 		novoFixture:setFilterData(2,1,-1)
 		--print("novo x = "..novoBody:getX().." novo y = "..novoBody:getY())
 

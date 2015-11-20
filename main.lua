@@ -1,11 +1,13 @@
 require "parser"
 require "geradorCarros"
 require "camera"
+require "geradorDeChao"
 
 function love.load()
 	mundos = {}
 	carros = {}
-	for i = 1 , 20 do
+	local chaoGlobal = geraShapeChao()
+	for i = 1 , 50 do
 		linha = io.read("*line")
 		velocidade,tuplas = parseLinha(linha)
 		--print("tamanho das tuplas"..#tuplas)
@@ -14,21 +16,11 @@ function love.load()
 			--carro = geraCarro(mundo,velocidade,tuplas)
 			table.insert(mundos,mundo)
 			table.insert(carros,carro)
-			local chao = {}
-			chao.shape = love.physics.newRectangleShape(8000, 20)
-			chao.body = love.physics.newBody( mundo,4000, 400,"static")
-			chao.fixture = love.physics.newFixture(chao.body, chao.shape, 1)
-			chao.fixture:setFilterData(1,2,-2)
-			carro.chao = chao
+			carro.chao = geraChao(mundo,chaoGlobal)
 		else
 			print("carro "..i.." descartado")
 		end
-
-
 	end
-
-
-
 end
 
 function love.update(dt)
@@ -46,14 +38,18 @@ end
 
 local function maisLonge()
 	melhor = 0
-	for _,carro in ipairs(carros) do
-		melhor = math.max(carro.body:getX(),melhor)
+	imelhor = 0
+	for i,carro in ipairs(carros) do
+		if carro.body:getX()>melhor then 
+			melhor = carro.body:getX()
+			imelhor = i
+		end
 	end
-	return melhor
+	return carros[imelhor].body:getX()-400,carros[imelhor].body:getY()-300
 end
 
 function love.draw()
-	camera:setPosition(maisLonge()-400,0)
+	camera:setPosition(maisLonge())
 	camera:set()
 	for _,carro in ipairs(carros) do
 		
@@ -70,7 +66,13 @@ function love.draw()
 				roda.body:getX()+math.cos(roda.body:getAngle())*roda.shape:getRadius(),
 				roda.body:getY()+math.sin(roda.body:getAngle())*roda.shape:getRadius())
 		end
-		love.graphics.polygon("fill", carro.chao.body:getWorldPoints(carro.chao.shape:getPoints()))
+		for i,v in pairs(carro.chao.shapes) do
+			x1,y1,x2,y2 = v:getPoints()
+			--print(" pontos "..x1.." "..y1.." "..x2.." "..y2)
+			love.graphics.line(carro.chao.body:getWorldPoints(v:getPoints()))
+			x1,y1,x2,y2 = carro.chao.body:getWorldPoints(v:getPoints())
+			--print(" pontos "..x1.." "..y1.." "..x2.." "..y2)
+		end
 	end
 	camera:unset()
 end	
