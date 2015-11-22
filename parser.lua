@@ -5,6 +5,7 @@ local function comp(tupla1,tupla2)
 end
 
 function parseLinha(linha)
+	--print("parseando linha "..linha)
 	d = {} --distancias do centro
 	a = {} -- angulo de cada um dos vertices
 	r = {} -- raio de cada uma das rodas. (0 == nao tem)
