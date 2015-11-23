@@ -8,8 +8,8 @@ function love.load()
 	carros = {}
 	local chaoGlobal = geraShapeChao()
 	Ncarros = 40
-	while Ncarros > 0 do 
-		
+	while Ncarros > 0 do
+
 		linha = io.read("*line")
 		if linha == nil then
 			break
@@ -17,7 +17,7 @@ function love.load()
 		velocidade,tuplas = parseLinha(linha)
 		--print("tamanho das tuplas"..#tuplas)
 		local mundo = love.physics.newWorld(0,10) --gravidade em x e y
-		if pcall(function () carro = geraCarro(mundo,velocidade,tuplas) end) then 
+		if pcall(function () carro = geraCarro(mundo,velocidade,tuplas) end) then
 			--carro = geraCarro(mundo,velocidade,tuplas)
 			table.insert(mundos,mundo)
 			table.insert(carros,carro)
@@ -32,7 +32,7 @@ function love.load()
 end
 
 function love.update(dt)
-	dt = dt* 5
+	dt = dt* 10
 	for _,carro in ipairs(carros) do
 		for _, roda in ipairs(carro.rodas) do
 			roda.body:setAngularVelocity(roda.velocidade)
@@ -62,7 +62,7 @@ local function maisLonge()
 	melhor = 0
 	local imelhor = 0
 	for i,carro in ipairs(carros) do
-		if carro.body:getX()>melhor then 
+		if carro.body:getX()>melhor then
 			melhor = carro.body:getX()
 			imelhor = i
 		end
@@ -71,12 +71,13 @@ local function maisLonge()
 end
 
 function love.draw()
+	love.graphics.print(#carros,20,50)
 	love.graphics.setColor(255, 255, 255, 255)
 	love.graphics.print(tempoSim,20,20)
 	camera:setPosition(maisLonge())
 	camera:set()
 	for _,carro in ipairs(carros) do
-		
+
 		love.graphics.setLineWidth(2)
 		--print(carro.rgba[1],carro.rgba[2],carro.rgba[3])
 		love.graphics.setColor(carro.rgba[1],carro.rgba[2],carro.rgba[3])
@@ -86,7 +87,7 @@ function love.draw()
 			love.graphics.line(carro.body:getWorldPoints(shape:getPoints()))
 
 		end
-		
+
 		for _,roda in ipairs(carro.rodas) do
 			love.graphics.circle("line",roda.body:getX(),roda.body:getY(),roda.shape:getRadius(),9) --10 eh o numero de segmentos que serao usados no draw da roda
 			love.graphics.line(roda.body:getX(),roda.body:getY(),
@@ -102,5 +103,4 @@ function love.draw()
 		end
 	end
 	camera:unset()
-end	
-
+end
