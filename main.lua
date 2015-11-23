@@ -7,7 +7,9 @@ function love.load()
 	mundos = {}
 	carros = {}
 	local chaoGlobal = geraShapeChao()
-	while true do 
+	Ncarros = 40
+	while Ncarros > 0 do 
+		
 		linha = io.read("*line")
 		if linha == nil then
 			break
@@ -21,11 +23,12 @@ function love.load()
 			table.insert(carros,carro)
 			carro.chao = geraChao(mundo,chaoGlobal)
 			carro.gene = linha
+			Ncarros = Ncarros - 1
 		else
 			--print("carro "..i.." descartado")
 		end
 	end
-	tempoSim = 15
+	tempoSim = 150
 end
 
 function love.update(dt)
@@ -48,7 +51,7 @@ function love.update(dt)
 end
 
 function geraSaida()
-	table.sort(carros,function(a,b) return a.body:getX()<b.body:getX() end )
+	table.sort(carros,function(a,b) return a.body:getX()>b.body:getX() end )
 	for _,v in ipairs(carros) do
 		print(v.gene)
 	end
@@ -68,17 +71,22 @@ local function maisLonge()
 end
 
 function love.draw()
+	love.graphics.setColor(255, 255, 255, 255)
+	love.graphics.print(tempoSim,20,20)
 	camera:setPosition(maisLonge())
 	camera:set()
 	for _,carro in ipairs(carros) do
 		
 		love.graphics.setLineWidth(2)
-		
+		--print(carro.rgba[1],carro.rgba[2],carro.rgba[3])
+		love.graphics.setColor(carro.rgba[1],carro.rgba[2],carro.rgba[3])
 		for index,shape in ipairs(carro.shapes) do
-			love.graphics.setColor(255,0,0)
-			love.graphics.polygon("line",carro.body:getWorldPoints(shape:getPoints()))
+			--love.graphics.setColor(255,0,0)
+			--print(carro.body:getWorldPoints(shape:getPoints()))
+			love.graphics.line(carro.body:getWorldPoints(shape:getPoints()))
+
 		end
-		love.graphics.setColor(0,255,0)
+		
 		for _,roda in ipairs(carro.rodas) do
 			love.graphics.circle("line",roda.body:getX(),roda.body:getY(),roda.shape:getRadius(),9) --10 eh o numero de segmentos que serao usados no draw da roda
 			love.graphics.line(roda.body:getX(),roda.body:getY(),

@@ -48,8 +48,12 @@ function geraCarro(mundo,velocidade,tuplas)
 	end
 	body:setX(400)
 	body:setY(200)
-
-	return {body=body,shapes=shapes,rodas=rodas}
+	local hash =velocidade+d[1]+d[2]+d[3]+d[4]+d[5]+d[6]+a[1]+a[2]+a[3]+a[4]+a[5]+a[6]+r[1]+r[2]+r[3]+r[4]+r[5]+r[6]
+	 rgba = {}
+	table.insert(rgba,(hash+50)%255)  -- red
+	table.insert(rgba,(hash+100)%255)  -- green
+	table.insert(rgba,(hash+200)%255)  -- blue
+	return {body=body,shapes=shapes,rodas=rodas,rgba = rgba}
 end
 
 function geraRoda(mundo,raio,velocidade,posx,posy,bodyPai)
@@ -65,6 +69,6 @@ function geraRoda(mundo,raio,velocidade,posx,posy,bodyPai)
 end
 
 function converteVelocidade(velocidadeAngular,raio)
-	local velocidadeLinear = velocidadeAngular*raio/20
+	local velocidadeLinear = velocidadeAngular*raio/100
 	return velocidadeLinear --VAI COSTAO -- FUI
 end

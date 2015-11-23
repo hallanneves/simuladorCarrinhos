@@ -17,8 +17,8 @@ function geraShapeChao()
 	yanterior = math.exp(0)
 	xanterior = 0
 	for x=STEP,12000,STEP do
-		xatual = love.math.random(xanterior+1,xanterior+STEP)
-		yatual = (math.exp(0.002*xatual)*0.5*math.sin(0.04*xatual))
+		xatual = xanterior+STEP/2--love.math.random(xanterior+1,xanterior+STEP)
+		yatual = (math.min(math.exp(0.002*xatual)*0.5,30)*math.sin(0.04*xatual))
 		novoShape = love.physics.newEdgeShape(x-STEP, yanterior, x, yatual)
 		--x1,y1,x2,y2 = novoShape:getPoints()
 		--print("adicionou shape, x = "..x.." pontos "..x1.." "..y1.." "..x2.." "..y2)

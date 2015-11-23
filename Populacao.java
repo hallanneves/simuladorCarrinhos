@@ -89,8 +89,8 @@ public class Populacao {
         aux2 = pai2.indexOf(';') + 1;
         String filho1 = pai1.substring(0, aux1);
         String filho2 = pai2.substring(0, aux2);
-        aux1++;
-        aux2++;
+     //   aux1++;
+      //  aux2++;
 
         //d0
         filho1 += pai2.substring(aux2, pai2.indexOf(',', aux2) + 1);
@@ -197,7 +197,7 @@ public class Populacao {
         } else {
             mutante = Integer.toString(r.nextInt(100)) + ";";
         }
-        aux++;
+        //aux++;
 
         for (int i = 0; i < 5; i++) { //d0-d4
             if (r.nextInt(100) > 35) {
@@ -267,10 +267,10 @@ public class Populacao {
         carregaPopulacao();
         selecionaCampeoes();
         procriarTodos();
-        //gerarMutante(rate);
-        //gerarMutante(rate);
-        //gerarMutante(rate);
-        //gerarMutante(rate);
+        gerarMutante(rate);
+        gerarMutante(rate);
+        gerarMutante(rate);
+        gerarMutante(rate);
         escrevePopulacao();
     }
 }
