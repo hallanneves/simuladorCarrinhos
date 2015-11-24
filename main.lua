@@ -59,21 +59,26 @@ end
 
 
 local function maisLonge()
-	melhor = 0
-	local imelhor = 0
+	melhor = -9999
+	local imelhor = 1
 	for i,carro in ipairs(carros) do
 		if carro.body:getX()>melhor then
 			melhor = carro.body:getX()
 			imelhor = i
 		end
 	end
-	return carros[imelhor].body:getX()-400,carros[imelhor].body:getY()-300
+	if imelhor then
+		return carros[imelhor].body:getX()-400,carros[imelhor].body:getY()-300
+	else
+		return 0
+	end
 end
 
 function love.draw()
-	love.graphics.print(#carros,20,50)
 	love.graphics.setColor(255, 255, 255, 255)
-	love.graphics.print(tempoSim,20,20)
+	love.graphics.print("Tempo restante :"..tempoSim,20,20)
+	love.graphics.print("Carros: "..#carros,20,40)
+	love.graphics.print("DistanciaMaxima "..maisLonge(),20,60)
 	camera:setPosition(maisLonge())
 	camera:set()
 	for _,carro in ipairs(carros) do
