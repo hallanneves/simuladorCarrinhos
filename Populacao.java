@@ -1,5 +1,4 @@
 
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,7 +22,7 @@ public class Populacao {
     public static ArrayList<Individuo> populacao = new ArrayList<>();
 
     public static void primeiraPopulacao() throws IOException {
-        File arquivo = new File("Populacao.txt"); //se já existir, será sobreescrito
+        File arquivo = new File("populacao.txt"); //se já existir, será sobreescrito
         FileWriter fileWriter = new FileWriter(arquivo);
         try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
             for (int i = 0; i < 40; i++) {
@@ -48,25 +47,20 @@ public class Populacao {
         }
     }
 
-    public static void selecionaCampeoes() {
+    public static void selecionaCampeoes(int champs) {
 
-        Individuo campeao0 = populacao.get(0);
-        Individuo campeao1 = populacao.get(1);
-        Individuo campeao2 = populacao.get(2);
-        Individuo campeao3 = populacao.get(3);
-        Individuo campeao4 = populacao.get(4);
-        Individuo campeao5 = populacao.get(5);
+        ArrayList<Individuo> selecionados = new ArrayList<>();
+
+        for (int i = 0; i < champs; i++) {
+            selecionados.add(populacao.get(i));
+        }
         populacao.clear();
-        populacao.add(campeao0);
-        populacao.add(campeao1);
-        populacao.add(campeao2);
-        populacao.add(campeao3);
-        populacao.add(campeao4);
-        populacao.add(campeao5);
+        populacao=selecionados;
+
     }
 
     public static void escrevePopulacao() throws IOException {
-        File arquivo = new File("Populacao.txt"); //se já existir, será sobreescrito
+        File arquivo = new File("populacao.txt"); //se já existir, será sobreescrito
         FileWriter fileWriter = new FileWriter(arquivo);
         try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
             for (Individuo populacao1 : populacao) {
@@ -85,12 +79,13 @@ public class Populacao {
 
         //vel
         int aux1, aux2;
+        aux1=0;
+        aux2=0;
         aux1 = pai1.indexOf(';') + 1;
         aux2 = pai2.indexOf(';') + 1;
         String filho1 = pai1.substring(0, aux1);
         String filho2 = pai2.substring(0, aux2);
-     //   aux1++;
-      //  aux2++;
+
 
         //d0
         filho1 += pai2.substring(aux2, pai2.indexOf(',', aux2) + 1);
@@ -187,9 +182,10 @@ public class Populacao {
 
     public static void gerarMutante(int rate) {
         Random r = new Random();
-        String eleito = populacao.get(r.nextInt(35)).getGene();
+        String eleito = populacao.get(r.nextInt(populacao.size())).getGene();
         String mutante = new String();
         int aux;
+        aux=0;
         aux = eleito.indexOf(';') + 1;
 
         if (r.nextInt(100) > 35) {
@@ -197,7 +193,6 @@ public class Populacao {
         } else {
             mutante = Integer.toString(r.nextInt(100)) + ";";
         }
-        //aux++;
 
         for (int i = 0; i < 5; i++) { //d0-d4
             if (r.nextInt(100) > 35) {
@@ -251,8 +246,9 @@ public class Populacao {
     }
 
     public static void procriarTodos() {
-        for (int i = 0; i < 6; i++) {
-            for (int j = i + 1; j < 6; j++) {
+        int pais = populacao.size();
+        for (int i = 0; i < pais; i++) {
+            for (int j = i + 1; j < pais; j++) {
                 procriar(i, j);
             }
         }
@@ -265,12 +261,19 @@ public class Populacao {
     public static void evoluir(int rate) throws IOException{
         genocidio();
         carregaPopulacao();
-        selecionaCampeoes();
+        selecionaCampeoes(4);
         procriarTodos();
         gerarMutante(rate);
         gerarMutante(rate);
         gerarMutante(rate);
         gerarMutante(rate);
+        gerarMutante(rate);
+        gerarMutante(rate);
+        gerarMutante(rate);
+        gerarMutante(rate);
+        for (int i = 0; i < 16; i++) {
+            populacao.add(new Individuo());
+        }
         escrevePopulacao();
     }
 }

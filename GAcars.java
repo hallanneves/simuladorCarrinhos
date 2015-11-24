@@ -26,7 +26,7 @@ public class GAcars {
             }
         }else{
             System.out.println("evoluiu");
-            Populacao.evoluir(40);
+            Populacao.evoluir(99);
         }
 
     }
